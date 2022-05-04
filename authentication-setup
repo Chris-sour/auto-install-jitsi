@@ -1,0 +1,55 @@
+Setup Password Authentication
+
+Step 1
+
+Open nano /etc/prosody/conf.d/$(hostname -f).cfg.lua
+
+change the current value of authentication from anonymous to internal_hashed like so
+VirtualHost "meet.racknerddemo.com"
+        -- enabled = false -- Remove this line to enable this host
+        -- authentication = "anonymous"
+        authentication = "internal_hashed"
+
+Step 2
+
+In the same file add the following below make sure you change your domain name
+
+VirtualHost "guest.meet.racknerddemo.com"
+    authentication = "anonymous"
+    c2s_require_encryption = false
+    
+Step 3
+
+Open nano /etc/jitsi/meet/$(hostname -f)-config.js
+
+And uncomment anonymousdomain
+   
+        // When using authentication, domain for guest users.
+        // anonymousdomain: 'guest.example.com',
+        anonymousdomain: 'guest.meet.racknerddemo.com',
+
+Step 4
+
+Open Sip Communicator file 
+
+nano /etc/jitsi/jicofo/sip-communicator.properties
+
+add the following line
+org.jitsi.jicofo.auth.URL=XMPP:<domain>
+
+example: org.jitsi.jicofo.auth.URL=XMPP:meet.racknerddemo.com
+
+Step 5.
+
+service prosody restart
+service jicofo restart
+service jitsi-videobridge2 restart
+service nginx restart
+
+Step 6.
+
+Create User
+
+prosodyctl register user $(hostname -f) VerySecretPassword
+
+Example prosodyctl register dave $(hostname -f) mypasswordhere
