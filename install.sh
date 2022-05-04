@@ -12,7 +12,7 @@ echo "* VPS, DEDICATED SERVERS, HOSTING *"
 echo "* -- www.devchristiangonzales.com -- *"
 echo "**********************************************************"
 sleep 1
-echo "Set Hostname enter hostname for Jitsi Meet example: meet.racknerddemo.com"
+echo "Set Hostname enter hostname for Jitsi Meet example: meet.devchristian.com.pe"
 read hostname
 host=${hostname%.*.*.*}
 echo $'127.0.0.1	localhost\n'$ip'	'$hostname'	'$host > /etc/hosts
